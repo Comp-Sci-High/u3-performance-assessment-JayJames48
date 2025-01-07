@@ -91,19 +91,32 @@ let soul={
     }
   }
   
+app.use((request,response,next)=>{
+  console.log(request.method+"/"+request.url)
+  next();
+})
+
+app.get("/", (request,response)=>{
+  response.status(200).send("<h1>Welcome to the best soul food spot in the NYC area<h1>")
+  })
+
+  app.get("/docs", (request,response)=>{
+    response.status(200).send("<h1>Go to /dish to see the most popular dish sold. Go to /history to see the background on the restaurant<h1>")
+    })
+
+    app.get("/dish", (request,response)=>{
+      response.status(200).json(soul.restaurant.menu[8])
+      })
+
+   app.get("/history",(request,response)=>{
+   response.status(200).json(soul.restaurant.background)
+   })
 
 
 
-
-
-
-
-
-
-
-
-
-
+   app.use((request,response,next)=>{
+    response.status(404).send("404 not found")
+    })
 
 app.listen(3000,()=>{
     console.log("server is running at http://loaclhost:3000")
